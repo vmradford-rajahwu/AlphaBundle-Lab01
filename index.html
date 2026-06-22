@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Alpha Bundle | LAB-02 Array Engine</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <style>
+        body { font-family: monospace; background: #0e0e0e; color: #00ff00; padding: 40px; }
+        table { width: 100%; max-width: 800px; border-collapse: collapse; margin-top: 20px; background: #141414; }
+        th, td { border: 1px solid #00ff00; padding: 12px; text-align: left; }
+        th { background: #002200; color: #00ff00; text-transform: uppercase; letter-spacing: 1px; }
+        .btn-container { margin-bottom: 20px; }
+        button { background: #00ff00; color: #0e0e0e; border: none; padding: 12px 24px; cursor: pointer; font-weight: bold; font-family: monospace; }
+        button:hover { background: #11cc11; }
+        .status-tag { font-weight: bold; color: #ffff00; }
+    </style>
+</head>
+<body>
+
+    <h2>LAB-02-ABUNDLE: Array Transformation Loops</h2>
+    <p>Operational Environment: SIRA Core Execution</p>
+
+    <div class="btn-container">
+        <button id="load-matrix-btn">Execute Pipeline Fetch</button>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Track Pathway</th>
+                <th>Core Focus Domain</th>
+                <th>Operational Status</th>
+            </tr>
+        </thead>
+        <tbody id="matrix-body">
+            <tr>
+                <td colspan="4" style="text-align: center; color: #888;">System Idle. Awaiting pipeline fetch command...</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script>
+        $(document).ready(function(){
+            $('#load-matrix-btn').click(function(){
+                // Asynchronous fetch over local loopback
+                $.getJSON('data.json', function(arrayData) {
+                    console.log("Array payload parsed successfully. Record count:", arrayData.length);
+                    
+                    // Clear the baseline placeholder table content
+                    $('#matrix-body').empty();
+                    
+                    // Level 2 Mechanics: Iterate over the variable length data collection
+                    $.each(arrayData, function(index, record) {
+                        var tableRow = `
+                            <tr>
+                                <td>${record.id}</td>
+                                <td><strong>${record.track}</strong></td>
+                                <td>${record.domain}</td>
+                                <td class="status-tag">${record.status}</td>
+                            </tr>
+                        `;
+                        // Append the built string row straight into the browser DOM
+                        $('#matrix-body').append(tableRow);
+                    });
+                }).fail(function(jqXHR, textStatus, errorThrown) {
+                    console.error("Pipeline failure:", textStatus, errorThrown);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

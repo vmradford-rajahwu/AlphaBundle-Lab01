@@ -1,0 +1,30 @@
+[
+  {
+    "id": 1,
+    "track": "CompTIA A+",
+    "domain": "Core Systems & Shell Administration",
+    "status": "Active Validation",
+    "priority": "High"
+  },
+  {
+    "id": 2,
+    "track": "Google IT Support",
+    "domain": "Network Layers & Transport Protocols",
+    "status": "In-Flight Integration",
+    "priority": "High"
+  },
+  {
+    "id": 3,
+    "track": "Google Project Management",
+    "domain": "Governance & Quality Gate Execution",
+    "status": "Continuous Audit",
+    "priority": "Medium"
+  },
+  {
+    "id": 4,
+    "track": "CompTIA Network+",
+    "domain": "Routing Protocols & Caching Topologies",
+    "status": "Pending Ingestion",
+    "priority": "High"
+  }
+]

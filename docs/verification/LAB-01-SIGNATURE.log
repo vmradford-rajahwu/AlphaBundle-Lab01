@@ -1,0 +1,35 @@
+HTTP/1.1 200 OK
+Accept-Ranges: bytes
+Cache-Control: max-age=3600
+ETag: W/"32088147345036350-512-2026-06-22T15:01:29.040Z"
+Date: Mon, 22 Jun 2026 15:04:17 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+Last-Modified: Mon, 22 Jun 2026 15:01:29 GMT
+Content-Length: 512
+Content-Type: application/json; charset=UTF-8
+
+[
+  {
+    "id": 1,
+    "track": "CompTIA A+",
+    "domain": "Core Systems & Shell Administration",
+    "status": "Active Validation",
+    "priority": "High"
+  },
+  {
+    "id": 2,
+    "track": "Google IT Support",
+    "domain": "Network Layers & Transport Protocols",
+    "status": "In-Flight Integration",
+    "priority": "High"
+  },
+  {
+    "id": 3,
+    "track": "Google Project Management",
+    "domain": "Governance & Quality Gate Execution",
+    "status": "Continuous Audit",
+    "priority": "Medium"
+  }
+]
+
