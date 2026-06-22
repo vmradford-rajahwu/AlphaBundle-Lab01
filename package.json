@@ -1,0 +1,15 @@
+{
+  "name": "alphabundle-lab01",
+  "version": "1.0.0",
+  "description": "Integrated Systems Architecture Matrix for Alpha-Bundle Pathways",
+  "main": "index.html",
+  "scripts": {
+    "start": "powershell -ExecutionPolicy Bypass -File scripts/Start-Lab.ps1",
+    "verify": "powershell -ExecutionPolicy Bypass -File scripts/Verify-Lab.ps1"
+  },
+  "author": "Vincent Radford (Rajahwu)",
+  "license": "MIT",
+  "dependencies": {
+    "http-server": "^14.1.1"
+  }
+}
