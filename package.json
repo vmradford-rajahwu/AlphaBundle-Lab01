@@ -4,6 +4,7 @@
   "description": "Integrated Systems Architecture Matrix for Alpha-Bundle Pathways",
   "main": "index.html",
   "scripts": {
+    "dev": "vercel dev",
     "start": "powershell -ExecutionPolicy Bypass -File scripts/Start-Lab.ps1",
     "verify": "powershell -ExecutionPolicy Bypass -File scripts/Verify-Lab.ps1"
   },
@@ -13,5 +14,8 @@
     "cors": "^2.8.6",
     "express": "^5.2.1",
     "http-server": "^14.1.1"
+  },
+  "devDependencies": {
+    "vercel": "^54.15.1"
   }
 }

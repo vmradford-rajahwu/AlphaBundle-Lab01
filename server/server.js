@@ -1,24 +1,25 @@
 const express = require('express');
 const cors = require('cors');
 const app = express();
-const port = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());
 
-app.get('/', (req, res) => {
-    res.send('Hello World!');
+// Base health check
+app.get('/api', (req, res) => {
+  res.send('AlphaBundle SIRA Core Serverless Engine Live.');
 });
 
-app.post('/submit', (req, res) => {
-    const body = req.body;
-    console.log('Received:', body);
-    res.json({
-        status: 'success',
-        received: body
-    });
+// Refactored ingestion route
+app.post('/api/submit', (req, res) => {
+  const body = req.body;
+  console.log('Serverless Ingestion Received:', body);
+  
+  res.json({
+    status: 'success',
+    received: body
+  });
 });
 
-app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
-});
+// CRITICAL: Export the Express instance for Vercel's handler
+module.exports = app;
