@@ -1,20 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Alpha Bundle | LAB-02 Array Engine</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <style>
-        body { font-family: monospace; background: #0e0e0e; color: #00ff00; padding: 40px; }
-        table { width: 100%; max-width: 800px; border-collapse: collapse; margin-top: 20px; background: #141414; }
-        th, td { border: 1px solid #00ff00; padding: 12px; text-align: left; }
-        th { background: #002200; color: #00ff00; text-transform: uppercase; letter-spacing: 1px; }
-        .btn-container { margin-bottom: 20px; }
-        button { background: #00ff00; color: #0e0e0e; border: none; padding: 12px 24px; cursor: pointer; font-weight: bold; font-family: monospace; }
-        button:hover { background: #11cc11; }
-        .status-tag { font-weight: bold; color: #ffff00; }
+        body {
+            font-family: monospace;
+            background: #0e0e0e;
+            color: #00ff00;
+            padding: 40px;
+        }
+
+        table {
+            width: 100%;
+            max-width: 800px;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: #141414;
+        }
+
+        th,
+        td {
+            border: 1px solid #00ff00;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background: #002200;
+            color: #00ff00;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-container {
+            margin-bottom: 20px;
+        }
+
+        button {
+            background: #00ff00;
+            color: #0e0e0e;
+            border: none;
+            padding: 12px 24px;
+            cursor: pointer;
+            font-weight: bold;
+            font-family: monospace;
+        }
+
+        button:hover {
+            background: #11cc11;
+        }
+
+        .status-tag {
+            font-weight: bold;
+            color: #ffff00;
+        }
     </style>
 </head>
+
 <body>
 
     <h2>LAB-02-ABUNDLE: Array Transformation Loops</h2>
@@ -22,6 +67,35 @@
 
     <div class="btn-container">
         <button id="load-matrix-btn">Execute Pipeline Fetch</button>
+    </div>
+
+    <div style="margin-bottom: 30px; padding: 20px; border: 1px dashed #00ff00; max-width: 800px; background: #141414;">
+        <h3>LAB-03: Ingest New Operational Pathway</h3>
+        <form id="pathway-form">
+            <div style="margin-bottom: 10px;">
+                <label>Track Pathway: </label>
+                <input type="text" id="form-track" required
+                    style="background: #000; color: #00ff00; border: 1px solid #00ff00; padding: 5px; font-family: monospace;">
+            </div>
+            <div style="margin-bottom: 10px;">
+                <label>Core Focus Domain: </label>
+                <input type="text" id="form-domain" required
+                    style="background: #000; color: #00ff00; border: 1px solid #00ff00; padding: 5px; font-family: monospace; width: 300px;">
+            </div>
+            <div style="margin-bottom: 15px;">
+                <label>Operational Status: </label>
+                <select id="form-status"
+                    style="background: #000; color: #00ff00; border: 1px solid #00ff00; padding: 5px; font-family: monospace;">
+                    <option value="Active Validation">Active Validation</option>
+                    <option value="In-Flight Integration">In-Flight Integration</option>
+                    <option value="Pending Ingestion">Pending Ingestion</option>
+                </select>
+            </div>
+            <button type="submit"
+                style="background: #00ff00; color: #0e0e0e; border: none; padding: 8px 16px; cursor: pointer; font-weight: bold; font-family: monospace;">Inject
+                Payload</button>
+        </form>
+        <div id="telemetry-log" style="margin-top: 15px; color: #ffff00; min-height: 20px;"></div>
     </div>
 
     <table>
@@ -35,23 +109,24 @@
         </thead>
         <tbody id="matrix-body">
             <tr>
-                <td colspan="4" style="text-align: center; color: #888;">System Idle. Awaiting pipeline fetch command...</td>
+                <td colspan="4" style="text-align: center; color: #888;">System Idle. Awaiting pipeline fetch command...
+                </td>
             </tr>
         </tbody>
     </table>
 
     <script>
-        $(document).ready(function(){
-            $('#load-matrix-btn').click(function(){
+        $(document).ready(function () {
+            $('#load-matrix-btn').click(function () {
                 // Asynchronous fetch over local loopback
-                $.getJSON('data.json', function(arrayData) {
+                $.getJSON('data.json', function (arrayData) {
                     console.log("Array payload parsed successfully. Record count:", arrayData.length);
-                    
+
                     // Clear the baseline placeholder table content
                     $('#matrix-body').empty();
-                    
+
                     // Level 2 Mechanics: Iterate over the variable length data collection
-                    $.each(arrayData, function(index, record) {
+                    $.each(arrayData, function (index, record) {
                         var tableRow = `
                             <tr>
                                 <td>${record.id}</td>
@@ -63,11 +138,57 @@
                         // Append the built string row straight into the browser DOM
                         $('#matrix-body').append(tableRow);
                     });
-                }).fail(function(jqXHR, textStatus, errorThrown) {
+                }).fail(function (jqXHR, textStatus, errorThrown) {
                     console.error("Pipeline failure:", textStatus, errorThrown);
+                });
+            });
+
+            // New LAB-03 Write/POST pipeline
+            $('#pathway-form').submit(function (event) {
+                event.preventDefault(); // Stop standard browser page reload
+
+                // Structure the payload explicitly
+                var payload = {
+                    track: $('#form-track').val(),
+                    domain: $('#form-domain').val(),
+                    status: $('#form-status').val()
+                };
+
+                $('#telemetry-log').text("Transmitting payload to loopback core...");
+
+                // AJAX POST Execution
+                $.ajax({
+                    url: 'http://localhost:3000/submit',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(payload),
+                    success: function (response) {
+                        console.log("Server verification receipt:", response);
+                        $('#telemetry-log').text(`[SUCCESS] Server status: ${response.status}. Ingested: ${response.received.track}`);
+
+                        // Dynamically append the newly created path directly to the table!
+                        var newRow = `
+                    <tr style="border-left: 3px solid #ffff00;">
+                        <td>*</td>
+                        <td><strong>${response.received.track}</strong></td>
+                        <td>${response.received.domain}</td>
+                        <td class="status-tag" style="color: #ffff00;">${response.received.status} (Ingested)</td>
+                    </tr>
+                `;
+                        $('#matrix-body').append(newRow);
+
+                        // Clear form inputs
+                        $('#form-track').val('');
+                        $('#form-domain').val('');
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.error("Transmission fault:", textStatus, errorThrown);
+                        $('#telemetry-log').text(`[CRITICAL] Fault encountered: ${textStatus}`);
+                    }
                 });
             });
         });
     </script>
 </body>
+
 </html>
